@@ -1,7 +1,9 @@
 # Task
 
 Create a [React](https://reactjs.org) application that provides the features described in this document.
-The basic requests of the task must be fulfilled. **Further creative approaches are of course always desired and a great bonus.**
+The basic requests of the task must be fulfilled. **Further creative approaches are of course always desired and a great bonus.**  
+
+Please invest a **maximum of 6 hours** in this task.  
 
 Good luck and have fun!
 
