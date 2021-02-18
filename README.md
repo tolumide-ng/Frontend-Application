@@ -28,8 +28,8 @@ It's not required that the main page has any content. **But it should be the def
   - title
   - type
 - 2 tab buttons to switch/change the tab content
-    - Description
-    - Attributes
+  - Description
+  - Attributes
 - Description tab should contain product description
 - Attributes tab should contain:
   - categories (name only, free text input)
@@ -70,7 +70,20 @@ When styling, you can decide for yourself what this dashboard should look like (
 ## Bonus
 Bonus points are awarded if the styles resemble those of [innoloft.com](https://innoloft.com/home) and could fit as seamlessly as possible within that website.
 Other points that are optional but give additional credit:
+- White-Labeling the application [see section below](#White-Labeling-Bonus)
 - Map (like written in the [main task](#Main-Task))
-- Environments for different API urls
-- Linter
-- Prettier
+
+## White-Labeling (Bonus)
+In this step you will have to apply different configurations to the dashboard. Here you will have to add environment variables (f.e. with a `.env` file). Depending on the `APP_ID` environment variable. If **no** `.env` file is given, make sure to add a fallback to `APP_ID=1`.
+A configuration will look like that:
+```json
+{
+    "id": 1,
+    "logo": "img.innoloft.de/logo.svg",
+    "mainColor": "#272e71",
+    "hasUserSection": true
+}
+```
+With the api call `/configuration/:appId/` you get the configuration for your `APP_ID`. Possible appIds are `1` and `2`.
+* In case `hasUserSection: false` - hide the user info section on the right.
+* Apply main color to header and other elements to your taste 
