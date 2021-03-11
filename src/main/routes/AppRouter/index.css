@@ -5,12 +5,13 @@
     align-items: center;
     /* background: rgba(0, 0, 0, 0.05); */
     font-family: helvetica;
+    background-color: var(--app-background-color);
 }
 
 .appwide-container {
-    max-width: 1500px;
+    max-width: var(--app-max-width);
     width: 100%;
-    background-color: var(--color-white);
+    /* background-color: var(--color-white); */
 }
 
 .scroll-lock {
