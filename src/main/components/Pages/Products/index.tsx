@@ -2,10 +2,14 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfigDef, ProductDef, TrlDef } from "../../../commonTypes";
 import configuration from "../../../store/modules/configuration";
-import { fetchProductAction } from "../../../store/modules/product/actions";
+import {
+    fetchProductAction,
+    fetchProductUpdateAction,
+} from "../../../store/modules/product/actions";
 import { fetchTrlAction } from "../../../store/modules/trl/actions";
 import { RootState } from "../../../store/modules/types";
 import { reusableMakeCall } from "../../../utilities/helpers/api";
+import { DisplayMap } from "../../UI/organims/AppMap";
 import { AttributesTab } from "../../UI/organims/Attributes";
 import { SideNav } from "../../UI/organims/SideNav";
 import "./index.css";
@@ -51,6 +55,14 @@ export const ProductsPage = () => {
 
     const handleTlr = (id: string | number) => {
         setTrlValue(String(id));
+        reusableMakeCall({
+            dispatch,
+            requestFunc: fetchProductUpdateAction,
+            method: "PUT",
+            payload: { tlr: id },
+            params: {},
+            path: `/product/${PRODUCT_ID}/`,
+        });
     };
 
     React.useEffect(() => {
@@ -190,7 +202,17 @@ export const ProductsPage = () => {
                             <></>
                         )}
                     </section>
-                    <section className="gdp-bottom"></section>
+                    <section className="gdp-bottom">
+                        {product?.company.address.latitude !== undefined &&
+                        product?.company.address.longitude !== undefined ? (
+                            <DisplayMap
+                                latitude={product?.company.address.latitude}
+                                longitude={product?.company.address.longitude}
+                            />
+                        ) : (
+                            <></>
+                        )}
+                    </section>
                 </article>
             </article>
         </article>
