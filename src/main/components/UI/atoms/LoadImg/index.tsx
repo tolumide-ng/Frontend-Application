@@ -1,5 +1,5 @@
 import * as React from "react";
-import placeholder from "../../../../assets/imgs/placeholder.svg";
+import placeholder from "../../../../assets/images/placeholder.svg";
 import "./index.css";
 
 interface LoadImgDef {
