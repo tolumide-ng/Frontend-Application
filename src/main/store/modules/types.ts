@@ -7,12 +7,11 @@ export interface RootState {
     dropDownReducer: {
         display: boolean;
     };
-}
-
-export interface fetchConfigurationReducer {
-    status: string;
-    error: string | null;
-    configuration: ConfigDef;
+    fetchConfigurationReducer: {
+        status: string;
+        error: string | null;
+        configuration: ConfigDef;
+    };
 }
 
 export interface StoreActionPropsDefs {

@@ -1,20 +1,60 @@
 import * as React from "react";
+import { CSSProperties } from "react";
 import "./index.css";
 import innoLogo from "../../../../assets/images/innoLogo.svg";
 import hamburger from "../../../../assets/images/hamburger.png";
 import { LoadImg } from "../../atoms/LoadImg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../store/modules/types";
+import { ConfigDef } from "../../../../commonTypes";
+import { reusableMakeCall } from "../../../../utilities/helpers/api";
+import { fetchConfigurationAction } from "../../../../store/modules/configuration/actions";
 
-export const AppHeader = () => {
+const APP_ID = process.env.APP_ID;
+
+export interface MyCustomCSS extends CSSProperties {
+    "--app-default-color": string;
+}
+
+export const AppHeader: React.FC = (): JSX.Element => {
+    const configSelector = useSelector((state: RootState) => {
+        return state.fetchConfigurationReducer;
+    });
+
+    // console.log("config reducer", state);
+
+    const [config, setConfig] = React.useState<undefined | ConfigDef>(
+        undefined
+    );
+
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        if (configSelector.status === "rest") {
+            reusableMakeCall({
+                dispatch,
+                requestFunc: fetchConfigurationAction,
+                method: "GET",
+                payload: {},
+                path: `/configuration/${APP_ID ?? 1}/`,
+            });
+        }
+
+        if (configSelector.status === "fetchConfigurationSuccess") {
+            setConfig(configSelector.configuration);
+        }
+    }, [configSelector.status]);
     return (
-        <section className="appheader">
+        <section
+            className="appheader"
+            style={{ "--app-default-color": config?.mainColor } as MyCustomCSS}
+        >
             <section className="appheader-inner">
                 <section className="appheader-left">
-                    {/* <img
-                        src={innoLogo}
-                        alt="image displaying innoloft's logo"
-                    /> */}
                     <LoadImg
-                        loadImg={innoLogo}
+                        loadImg={
+                            "https://anvkgjjben.cloudimg.io/width/400/x/https://img.innoloft.de/innoloft-no-white-space.svg"
+                        }
                         loadAlt="image displaying innoloft's logo"
                         loadClass="appheader-logo"
                         loadImgMob={hamburger}
