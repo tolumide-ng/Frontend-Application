@@ -8,10 +8,7 @@ declare global {
 }
 function initMap(lat: string, long: string): void {
     // The location of Uluru
-    console.log(typeof parseFloat(lat));
-    console.log("theypeof that ", parseFloat(long));
     const uluru = { lat: parseFloat(lat), lng: parseFloat(long) };
-    console.log("what the location looks like", uluru);
     // The map, centered at Uluru
     const map = new window.google.maps.Map(
         document.getElementById("map") as HTMLElement,

@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { mode } from "../../../../../../webpack-build-utils/webpack.development";
+import { useDispatch } from "react-redux";
 import { ProductDef } from "../../../../commonTypes";
-import product from "../../../../store/modules/product";
 import { fetchProductUpdateAction } from "../../../../store/modules/product/actions";
-import { RootState } from "../../../../store/modules/types";
+
 import { reusableMakeCall } from "../../../../utilities/helpers/api";
+import InputForm from "../../atoms/InputForm";
 import "./index.css";
 
 interface AttributesDef {
@@ -28,115 +27,77 @@ interface BasicDef {
 }
 
 export const AttributesTab = (props: AttributesDef) => {
-    const productSelector = useSelector(
-        (state: RootState) => state.fetchProductReducer
-    );
+    const [buisnessModel, setBuinessModel] = React.useState([
+        ...props.product?.businessModels,
+    ]);
 
-    const [productCategories, setProductCategories] = React.useState(
-        props.product?.categories
-    );
-
-    const [buisnessModel, setBuinessModel] = React.useState<
-        BasicDef[] | undefined
-    >(undefined);
+    const [categories, setCategories] = React.useState([
+        ...props.product?.categories,
+    ]);
 
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
-        if (!buisnessModel) {
-            const all: BasicDef[] = [];
-            props.product?.businessModels?.map((model) => {
-                all.push({ id: model.id, name: model.name });
-            });
-
-            setBuinessModel(all);
-        }
-    }, [props.product?.businessModels.length]);
-
-    const handleCategoryChange = (id: string | number, value: string) => {
-        const theCategory = productCategories?.find(
-            (category) => category.id === id
-        );
-
-        const theIndex = productCategories?.findIndex(
-            (category) => category.id === id
-        );
-
-        if (theCategory) {
-            const newCategories = productCategories;
-            // console.log("the index", theIndex);
-            if (
-                productCategories &&
-                newCategories &&
-                typeof theIndex === "number" &&
-                theIndex >= 0
-            ) {
-                // setProductCategories([])
-                newCategories[theIndex] = { name: value, id: Number(id) };
-
-                reusableMakeCall({
-                    dispatch,
-                    requestFunc: fetchProductUpdateAction,
-                    method: "PUT",
-                    payload: { newCategories },
-                    params: {},
-                    path: `/product/${props.PRODUCT_ID}/`,
-                });
-
-                setProductCategories(newCategories);
+    const handleTheChange = (id: string, value: string) => {
+        const mon = [];
+        for (let mona of categories) {
+            if (mona.id == Number(id)) {
+                mon.push({ id: Number(id), name: value });
+            } else {
+                mon.push(mona);
             }
         }
+        setCategories(mon);
+        reusableMakeCall({
+            dispatch,
+            requestFunc: fetchProductUpdateAction,
+            method: "PUT",
+            payload: { product: { ...props.product, categories: mon } },
+            params: {},
+            path: `/product/${props.PRODUCT_ID}/`,
+        });
     };
 
-    const handleModelChange = (id: string | number, value: string) => {
-        const theModel = buisnessModel?.find((model) => model.id === id);
-
-        const theIndex = buisnessModel?.findIndex((model) => model.id === id);
-
-        if (theModel) {
-            const newModels = buisnessModel;
-            // console.log("the index", theIndex);
-            if (newModels && typeof theIndex === "number" && theIndex >= 0) {
-                // setProductCategories([])
-                newModels[theIndex] = { name: value, id: Number(id) };
-                reusableMakeCall({
-                    dispatch,
-                    requestFunc: fetchProductUpdateAction,
-                    method: "PUT",
-                    payload: { newModels },
-                    params: {},
-                    path: `/product/${props.PRODUCT_ID}/`,
-                });
-                setBuinessModel(newModels);
+    const handleBusinessModel = (id: string, value: string) => {
+        const mon = [];
+        for (let model of buisnessModel) {
+            if (model.id == Number(id)) {
+                mon.push({ id: Number(id), name: value });
+            } else {
+                mon.push(model);
             }
         }
+        reusableMakeCall({
+            dispatch,
+            requestFunc: fetchProductUpdateAction,
+            method: "PUT",
+            payload: { product: { ...props.product, categories: mon } },
+            params: {},
+            path: `/product/${props.PRODUCT_ID}/`,
+        });
+        setBuinessModel(mon);
     };
+
     return (
         <div className="">
-            {/* {JSON.stringify(props.product?.categories)} */}
             <div className="">
                 <p className="gdp-att">Categories</p>
                 <div className="gdp-editables-one">
-                    {productCategories?.map((category) => (
-                        <>
-                            <input
-                                key={category.id}
-                                type="text"
-                                name="category"
-                                id={String(category.id)}
-                                className="gdp-input"
-                                value={category.name}
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) =>
-                                    handleCategoryChange(
-                                        category.id,
-                                        e.target?.value
-                                    )
-                                }
-                            />
-                            {/* {category.id} */}
-                        </>
+                    {categories?.map((category) => (
+                        <InputForm
+                            inputType="text"
+                            inputClassName="gdp-input"
+                            inputName={String(category.id)}
+                            inputValue={category.name}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) =>
+                                handleTheChange(
+                                    String(category.id),
+                                    e.target?.value
+                                )
+                            }
+                            key={category.id}
+                        />
                     ))}
                     <input type="text" name="" id="" className="gdp-input" />
                 </div>
@@ -145,22 +106,22 @@ export const AttributesTab = (props: AttributesDef) => {
                 <p className="gdp-att">Business Models</p>
                 <div className="gdp-editables-one">
                     {buisnessModel?.map((model) => (
-                        <>
-                            <input
-                                key={model.id}
-                                type="text"
-                                name="category"
-                                id={String(model.id)}
-                                className="gdp-input"
-                                value={model.name}
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) =>
-                                    handleModelChange(model.id, e.target?.value)
-                                }
-                            />
-                            {/* {category.id} */}
-                        </>
+                        <input
+                            key={model.id}
+                            type="text"
+                            name="category"
+                            id={String(model.id)}
+                            className="gdp-input"
+                            value={model.name}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) =>
+                                handleBusinessModel(
+                                    String(model.id),
+                                    e.target?.value
+                                )
+                            }
+                        />
                     ))}
                     <input type="text" name="" id="" className="gdp-input" />
                 </div>
