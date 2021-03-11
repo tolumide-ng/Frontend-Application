@@ -5,11 +5,13 @@
     height: var(--app-header-h);
     background-color: var(--app-default-color);
     width: 100%;
-    max-width: var(--app-max-width);
     padding: var(--appheader-padding);
+    display: flex;
+    justify-content: center;
 }
 
 .appheader-inner {
+    max-width: var(--app-max-width);
     width: 100%;
     display: flex;
     background-color: var(--app-default-color);
