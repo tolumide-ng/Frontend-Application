@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductDef } from "../../../commonTypes";
+import { ProductDef, TrlDef } from "../../../commonTypes";
 import { fetchProductAction } from "../../../store/modules/product/actions";
+import { fetchTrlAction } from "../../../store/modules/trl/actions";
 import { RootState } from "../../../store/modules/types";
 import { reusableMakeCall } from "../../../utilities/helpers/api";
 import { SideNav } from "../../UI/organims/SideNav";
@@ -14,11 +15,29 @@ export const ProductsPage = () => {
         (state: RootState) => state.fetchProductReducer
     );
 
+    const trlSelector = useSelector(
+        (state: RootState) => state.fetchTrlReducer
+    );
+
     const [product, setProduct] = React.useState<undefined | ProductDef>(
+        undefined
+    );
+    const [trl, setTrl] = React.useState<
+        | undefined
+        | Array<{
+              id: string | number;
+              name: string;
+              description: string | null;
+          }>
+    >(undefined);
+
+    const [trlValue, setTrlValue] = React.useState<undefined | number>(
         undefined
     );
 
     const dispatch = useDispatch();
+
+    const handleTlr = (id: string | number) => {};
 
     React.useEffect(() => {
         console.log(productSelector);
@@ -33,10 +52,28 @@ export const ProductsPage = () => {
             });
         }
 
-        if (productSelector.status === "fetchProductSuccess") {
+        if (productSelector.status === "fetchProductSuccess" && !product) {
             setProduct(productSelector.product);
+            setTrlValue(productSelector.product.trl.id);
         }
     }, [productSelector.status]);
+
+    React.useEffect(() => {
+        if (trlSelector.status === "rest") {
+            reusableMakeCall({
+                dispatch,
+                requestFunc: fetchTrlAction,
+                method: "GET",
+                payload: {},
+                params: {},
+                path: "/trl/",
+            });
+        }
+
+        if (trlSelector.status === "fetchTrlSuccess") {
+            setTrl(trlSelector.trl);
+        }
+    }, [trlSelector.status]);
 
     return (
         <article className="gdp">
@@ -44,8 +81,9 @@ export const ProductsPage = () => {
                 <SideNav />
             </aside>
             <article className="gdp-main">
-                {/* {JSON.stringify(product)} */}
                 <article className="gdp-left">
+                    {trl && JSON.stringify(trl[0])}
+                    {/* {JSON.stringify(trl)} */}
                     <figure className="gdp-prod">
                         <div className="gdp-imgcont">
                             <img
@@ -85,6 +123,53 @@ export const ProductsPage = () => {
                                     <button className="gdp-control-button app-button">
                                         View Attributes
                                     </button>
+                                </div>
+
+                                <div className="gdp-editables">
+                                    <div className="gdp-editables-one">
+                                        <input
+                                            type="text"
+                                            name=""
+                                            id=""
+                                            className="gdp-input"
+                                        />
+                                        <input
+                                            type="text"
+                                            name=""
+                                            id=""
+                                            className="gdp-input"
+                                        />
+                                    </div>
+                                    <div className="gdp-editables-two">
+                                        {trl &&
+                                            trl?.map((option) => (
+                                                <div className="gdp-radio">
+                                                    <input
+                                                        type="radio"
+                                                        name="trl"
+                                                        className="gdp-input--radio"
+                                                        id={String(option.id)}
+                                                        value={option.id}
+                                                        onChange={() =>
+                                                            handleTlr(option.id)
+                                                        }
+                                                    />
+                                                    <label
+                                                        htmlFor={String(
+                                                            option.id
+                                                        )}
+                                                        className="gdp-input-radio--label"
+                                                    >
+                                                        {option.name}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                    </div>
+                                    <div className="gdp-editables-control">
+                                        <button className="gdp-editables-control">
+                                            Edit
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </section>

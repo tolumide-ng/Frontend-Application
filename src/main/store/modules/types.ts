@@ -21,7 +21,11 @@ export interface RootState {
     fetchTrlReducer: {
         status: string;
         error: string | null;
-        trl: TrlDef;
+        trl: Array<{
+            id: string | number;
+            name: string;
+            description: string | null;
+        }>;
     };
 }
 
