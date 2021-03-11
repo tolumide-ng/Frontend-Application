@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductDef, TrlDef } from "../../../commonTypes";
+import { ConfigDef, ProductDef, TrlDef } from "../../../commonTypes";
+import configuration from "../../../store/modules/configuration";
 import { fetchProductAction } from "../../../store/modules/product/actions";
 import { fetchTrlAction } from "../../../store/modules/trl/actions";
 import { RootState } from "../../../store/modules/types";
@@ -36,9 +37,13 @@ export const ProductsPage = () => {
         undefined
     );
 
-    const [category, setCategory] = React.useState<undefined | string>(
+    const [config, setConfig] = React.useState<undefined | ConfigDef>(
         undefined
     );
+
+    const configSelector = useSelector((state: RootState) => {
+        return state.fetchConfigurationReducer;
+    });
 
     const [display, setDisplay] = React.useState("attribute");
 
@@ -65,7 +70,11 @@ export const ProductsPage = () => {
             setTrlValue(String(productSelector.product.trl.id));
             // setCategory(productSelector.product.categories);
         }
-    }, [productSelector.status]);
+
+        if (configSelector.status === "fetchConfigurationSuccess") {
+            setConfig(configSelector.configuration);
+        }
+    }, [productSelector.status, configSelector.status]);
 
     React.useEffect(() => {
         if (trlSelector.status === "rest") {
@@ -141,6 +150,7 @@ export const ProductsPage = () => {
                                                 product={product}
                                                 trlValue={trlValue}
                                                 trl={trl}
+                                                PRODUCT_ID={PRODUCT_ID}
                                             />
                                         ) : (
                                             <></>
@@ -159,20 +169,26 @@ export const ProductsPage = () => {
                 </article>
                 <article className="gdp-right">
                     <section className="gdp-top">
-                        <div className="gdp-user">
-                            <img
-                                src={product?.user.profilePicture}
-                                alt={`a picture of ${product?.user.firstName}`}
-                                className="gdp-user-img"
-                            />
-                            <div className="gdp-user-name">
-                                {product?.user.firstName}{" "}
-                                {product?.user.lastName}
+                        {config?.hasUserSection ? (
+                            <div className="gdp-user">
+                                <img
+                                    src={product?.user.profilePicture}
+                                    alt={`a picture of ${
+                                        product?.user.firstName ?? ""
+                                    }`}
+                                    className="gdp-user-img"
+                                />
+                                <div className="gdp-user-name">
+                                    {product?.user.firstName}{" "}
+                                    {product?.user.lastName}
+                                </div>
+                                <div className="gdp-user-company">
+                                    {product?.company.name}
+                                </div>
                             </div>
-                            <div className="gdp-user-company">
-                                {product?.company.name}
-                            </div>
-                        </div>
+                        ) : (
+                            <></>
+                        )}
                     </section>
                     <section className="gdp-bottom"></section>
                 </article>

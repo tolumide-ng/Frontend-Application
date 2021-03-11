@@ -1,7 +1,7 @@
 .appheader {
     --appheader-logo-h: 1.6425rem;
     --appheader-logo-w: 8.75rem;
-    --appheader-padding: 0 0;
+    --appheader-padding: 0 1rem;
     height: var(--app-header-h);
     background-color: var(--app-default-color);
     width: 100%;

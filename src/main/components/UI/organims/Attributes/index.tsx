@@ -1,9 +1,11 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { mode } from "../../../../../../webpack-build-utils/webpack.development";
 import { ProductDef } from "../../../../commonTypes";
 import product from "../../../../store/modules/product";
+import { fetchProductUpdateAction } from "../../../../store/modules/product/actions";
 import { RootState } from "../../../../store/modules/types";
+import { reusableMakeCall } from "../../../../utilities/helpers/api";
 import "./index.css";
 
 interface AttributesDef {
@@ -17,6 +19,7 @@ interface AttributesDef {
     product: ProductDef | undefined;
     handleTlr: (id: string | number) => void;
     trlValue: string | undefined;
+    PRODUCT_ID: number;
 }
 
 interface BasicDef {
@@ -36,6 +39,8 @@ export const AttributesTab = (props: AttributesDef) => {
     const [buisnessModel, setBuinessModel] = React.useState<
         BasicDef[] | undefined
     >(undefined);
+
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         if (!buisnessModel) {
@@ -57,10 +62,7 @@ export const AttributesTab = (props: AttributesDef) => {
             (category) => category.id === id
         );
 
-        console.log("what was found >>>>>>>", theCategory);
-
         if (theCategory) {
-            console.log("the value to use >>>>", value);
             const newCategories = productCategories;
             // console.log("the index", theIndex);
             if (
@@ -71,13 +73,20 @@ export const AttributesTab = (props: AttributesDef) => {
             ) {
                 // setProductCategories([])
                 newCategories[theIndex] = { name: value, id: Number(id) };
-                console.log("all od them ", newCategories[theIndex]);
+
+                reusableMakeCall({
+                    dispatch,
+                    requestFunc: fetchProductUpdateAction,
+                    method: "PUT",
+                    payload: { newCategories },
+                    params: {},
+                    path: `/product/${props.PRODUCT_ID}/`,
+                });
+
                 setProductCategories(newCategories);
             }
         }
     };
-
-    const handleCategory = (e: React.ChangeEvent) => {};
 
     const handleModelChange = (id: string | number, value: string) => {
         const theModel = buisnessModel?.find((model) => model.id === id);
@@ -90,7 +99,14 @@ export const AttributesTab = (props: AttributesDef) => {
             if (newModels && typeof theIndex === "number" && theIndex >= 0) {
                 // setProductCategories([])
                 newModels[theIndex] = { name: value, id: Number(id) };
-                console.log("all od them ", newModels[theIndex]);
+                reusableMakeCall({
+                    dispatch,
+                    requestFunc: fetchProductUpdateAction,
+                    method: "PUT",
+                    payload: { newModels },
+                    params: {},
+                    path: `/product/${props.PRODUCT_ID}/`,
+                });
                 setBuinessModel(newModels);
             }
         }
@@ -98,49 +114,56 @@ export const AttributesTab = (props: AttributesDef) => {
     return (
         <div className="">
             {/* {JSON.stringify(props.product?.categories)} */}
-            <div className="gdp-editables-one">
-                {productCategories?.map((category) => (
-                    <>
-                        <input
-                            key={category.id}
-                            type="text"
-                            name="category"
-                            id={String(category.id)}
-                            className="gdp-input"
-                            value={category.name}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) =>
-                                handleCategoryChange(
-                                    category.id,
-                                    e.target?.value
-                                )
-                            }
-                        />
-                        {/* {category.id} */}
-                    </>
-                ))}
-                <input type="text" name="" id="" className="gdp-input" />
+            <div className="">
+                <p className="gdp-att">Categories</p>
+                <div className="gdp-editables-one">
+                    {productCategories?.map((category) => (
+                        <>
+                            <input
+                                key={category.id}
+                                type="text"
+                                name="category"
+                                id={String(category.id)}
+                                className="gdp-input"
+                                value={category.name}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) =>
+                                    handleCategoryChange(
+                                        category.id,
+                                        e.target?.value
+                                    )
+                                }
+                            />
+                            {/* {category.id} */}
+                        </>
+                    ))}
+                    <input type="text" name="" id="" className="gdp-input" />
+                </div>
             </div>
-
-            <div className="gdp-editables-one">
-                {buisnessModel?.map((model) => (
-                    <>
-                        <input
-                            key={model.id}
-                            type="text"
-                            name="category"
-                            id={String(model.id)}
-                            className="gdp-input"
-                            value={model.name}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) => handleModelChange(model.id, e.target?.value)}
-                        />
-                        {/* {category.id} */}
-                    </>
-                ))}
-                <input type="text" name="" id="" className="gdp-input" />
+            <div className="">
+                <p className="gdp-att">Business Models</p>
+                <div className="gdp-editables-one">
+                    {buisnessModel?.map((model) => (
+                        <>
+                            <input
+                                key={model.id}
+                                type="text"
+                                name="category"
+                                id={String(model.id)}
+                                className="gdp-input"
+                                value={model.name}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) =>
+                                    handleModelChange(model.id, e.target?.value)
+                                }
+                            />
+                            {/* {category.id} */}
+                        </>
+                    ))}
+                    <input type="text" name="" id="" className="gdp-input" />
+                </div>
             </div>
 
             <div className="gdp-editables-two">
@@ -166,9 +189,9 @@ export const AttributesTab = (props: AttributesDef) => {
                     ))}
             </div>
             <div className="gdp-editables-three">
-                <button className="gdp-editables-control gdp-control-button">
+                {/* <button className="gdp-editables-control gdp-control-button">
                     Edit
-                </button>
+                </button> */}
             </div>
         </div>
     );

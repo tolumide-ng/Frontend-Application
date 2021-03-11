@@ -30,11 +30,13 @@
 .gdp-right {
     grid-row: 1;
     grid-column: 2;
-    background-color: aqua;
     height: 100%;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
+    /* display: grid;
+    grid-template-rows: 1fr 1fr; */
     row-gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .gdp-left {
@@ -194,7 +196,6 @@
 .gdp-top {
     grid-column: 1;
     grid-row: 1;
-    border: 2px solid red;
 }
 
 .gdp-bottom {
