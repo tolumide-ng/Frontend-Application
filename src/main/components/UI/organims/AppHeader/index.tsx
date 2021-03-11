@@ -52,13 +52,18 @@ export const AppHeader: React.FC = (): JSX.Element => {
         >
             <section className="appheader-inner">
                 <section className="appheader-left">
+                    <img
+                        src={hamburger}
+                        alt=""
+                        className="appheader-hamburger"
+                    />
+
                     <LoadImg
                         loadImg={
                             "https://anvkgjjben.cloudimg.io/width/400/x/https://img.innoloft.de/innoloft-no-white-space.svg"
                         }
                         loadAlt="image displaying innoloft's logo"
                         loadClass="appheader-logo"
-                        loadImgMob={hamburger}
                     />
                 </section>
             </section>

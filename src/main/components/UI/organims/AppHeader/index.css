@@ -33,10 +33,29 @@
     height: 100%;
 }
 
+.appheader-hamburger {
+    display: none;
+}
+
+.appheader-hamcont {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media screen and (max-width: 745px) {
     .appheader {
         --appheader-logo-h: 1.3125rem;
-        --appheader-logo-w: 1.3125rem;
+        --appheader-logo-w: 5rem;
         --appheader-padding: 0 1rem;
+    }
+
+    .appheader-hamburger {
+        display: block;
+        height: 1.3125rem;
+        width: 1.3125rem;
+        margin-right: 1rem;
+        cursor: pointer;
     }
 }
