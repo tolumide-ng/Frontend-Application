@@ -176,7 +176,7 @@ export const ProductsPage = () => {
                                 <div className="gdp-editables"></div>
                             </div>
                         </section>
-                        <section className="gdp-content"></section>
+                        {/* <section className="gdp-content"></section> */}
                     </article>
                 </article>
                 <article className="gdp-right">
