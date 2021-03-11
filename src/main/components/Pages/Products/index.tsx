@@ -1,10 +1,13 @@
 import * as React from "react";
+import { SideNav } from "../../UI/organims/SideNav";
 import "./index.css";
 
 export const ProductsPage = () => {
     return (
         <article className="gdp">
-            <nav className="gdp-nav"></nav>
+            <aside className="gdp-nav">
+                <SideNav />
+            </aside>
             <article className="gdp-main">
                 <article className="gdp-left">
                     <figure className="gdp-prod">

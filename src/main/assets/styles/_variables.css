@@ -12,6 +12,7 @@
     --color-deep-sea-green: #0a5566;
     --color-dusty-gray: #979797;
     --app-background-color: #f6f6f6;
+    --color-alto: #dddddd;
 }
 
 @media screen and (max-width: 1024px) {
