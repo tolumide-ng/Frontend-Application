@@ -47,12 +47,27 @@ export const ProductsPage = () => {
                 {/* {JSON.stringify(product)} */}
                 <article className="gdp-left">
                     <figure className="gdp-prod">
-                        <img
-                            src={product?.picture}
-                            alt=""
-                            className="gdp-img"
-                        />
-                        <figcaption className="gdp-info"></figcaption>
+                        <div className="gdp-imgcont">
+                            <img
+                                src={product?.picture}
+                                alt=""
+                                className="gdp-img"
+                            />
+                        </div>
+                        <figcaption className="gdp-info">
+                            <div className="gdp-infocont">
+                                <h3 className="gdp-info-key">Title:</h3>&nbsp;
+                                <p className="gdp-info-value">
+                                    {product?.name}
+                                </p>
+                            </div>
+                            <div className="gdp-infocont">
+                                <h3 className="gdp-info-key">Type:</h3>&nbsp;
+                                <p className="gdp-info-value">
+                                    {product?.type.name}
+                                </p>
+                            </div>
+                        </figcaption>
                     </figure>
                     <article className="gdp-cont">
                         <section className="gdp-tabcont">
