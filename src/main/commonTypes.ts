@@ -65,3 +65,11 @@ export interface ProductDef {
     };
     businessModels: Array<{ id: number; name: string }>;
 }
+
+export interface TrlDef {
+    trl: Array<{
+        id: string | number;
+        name: string;
+        description: string | null;
+    }>;
+}

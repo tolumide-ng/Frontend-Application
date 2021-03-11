@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootStateDef } from ".";
-import { ConfigDef, ForAxiosDefs, ProductDef } from "../../commonTypes";
+import { ConfigDef, ForAxiosDefs, ProductDef, TrlDef } from "../../commonTypes";
 
 export interface RootState {
     dropDownReducer: {
@@ -16,6 +16,12 @@ export interface RootState {
     status: string;
     error: string | null;
     product: ProductDef;
+
+    fetchTrlReducer: {
+        STATUS: string;
+        error: string | null;
+        trl: TrlDef;
+    };
 }
 
 export interface StoreActionPropsDefs {

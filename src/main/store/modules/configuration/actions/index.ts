@@ -1,6 +1,7 @@
 import { axiosCall } from "../../../../utilities/helpers/axiosCall";
 import { AppThunk, StoreActionPropsDefs } from "../../types";
 import {
+    FETCH_CONFIGURATION_FAILURE,
     FETCH_CONFIGURATION_PENDING,
     FETCH_CONFIGURATION_SUCCESS,
 } from "../actionTypes";
@@ -15,7 +16,7 @@ export const fetchConfigurationPending = () => ({
 });
 
 export const fetchConfigurationFailure = (error: string) => ({
-    type: FETCH_CONFIGURATION_PENDING,
+    type: FETCH_CONFIGURATION_FAILURE,
     payload: {
         status: "fetchConfigurationFailure",
         error,
