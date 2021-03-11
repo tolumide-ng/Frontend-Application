@@ -31,7 +31,11 @@ export const ProductsPage = () => {
           }>
     >(undefined);
 
-    const [trlValue, setTrlValue] = React.useState<undefined | number>(
+    const [trlValue, setTrlValue] = React.useState<undefined | string>(
+        undefined
+    );
+
+    const [category, setCategory] = React.useState<undefined | string>(
         undefined
     );
 
@@ -40,7 +44,6 @@ export const ProductsPage = () => {
     const handleTlr = (id: string | number) => {};
 
     React.useEffect(() => {
-        console.log(productSelector);
         if (productSelector.status === "rest" && !product) {
             reusableMakeCall({
                 dispatch,
@@ -54,7 +57,8 @@ export const ProductsPage = () => {
 
         if (productSelector.status === "fetchProductSuccess" && !product) {
             setProduct(productSelector.product);
-            setTrlValue(productSelector.product.trl.id);
+            setTrlValue(String(productSelector.product.trl.id));
+            // setCategory(productSelector.product.categories);
         }
     }, [productSelector.status]);
 
@@ -82,7 +86,6 @@ export const ProductsPage = () => {
             </aside>
             <article className="gdp-main">
                 <article className="gdp-left">
-                    {trl && JSON.stringify(trl[0])}
                     {/* {JSON.stringify(trl)} */}
                     <figure className="gdp-prod">
                         <div className="gdp-imgcont">
@@ -153,6 +156,10 @@ export const ProductsPage = () => {
                                                         onChange={() =>
                                                             handleTlr(option.id)
                                                         }
+                                                        checked={
+                                                            trlValue ===
+                                                            option.id
+                                                        }
                                                     />
                                                     <label
                                                         htmlFor={String(
@@ -165,8 +172,8 @@ export const ProductsPage = () => {
                                                 </div>
                                             ))}
                                     </div>
-                                    <div className="gdp-editables-control">
-                                        <button className="gdp-editables-control">
+                                    <div className="gdp-editables-three">
+                                        <button className="gdp-editables-control gdp-control-button">
                                             Edit
                                         </button>
                                     </div>
