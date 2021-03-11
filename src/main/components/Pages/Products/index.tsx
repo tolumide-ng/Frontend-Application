@@ -71,7 +71,12 @@ export const ProductsPage = () => {
                     </figure>
                     <article className="gdp-cont">
                         <section className="gdp-tabcont">
-                            <div className="gdp-tabcont-left"></div>
+                            <div className="gdp-tabcont-left">
+                                <h3 className="gdp-info-key">Description:</h3>
+                                <div className="gdp-info-value gdp-value-mt">
+                                    {product?.description}
+                                </div>
+                            </div>
                             <div className="gdp-tabcont-right"></div>
                         </section>
                         <section className="gdp-content"></section>
