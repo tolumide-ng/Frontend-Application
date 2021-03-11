@@ -54,3 +54,16 @@ export const fetchProductAction = (
         dispatch(fetchProductFailure(error ?? ""));
     }
 };
+
+export const fetchProductUpdateActioon = (
+    props: StoreActionPropsDefs,
+    newValue: {}
+): AppThunk => async (dispatch) => {
+    try {
+        dispatch(fetchProductPending());
+        const response = await axiosCall(props);
+        dispatch(fetchProductSuccess(response?.data));
+    } catch (error) {
+        dispatch(fetchProductFailure(error ?? ""));
+    }
+};

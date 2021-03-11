@@ -5,6 +5,7 @@ import { fetchProductAction } from "../../../store/modules/product/actions";
 import { fetchTrlAction } from "../../../store/modules/trl/actions";
 import { RootState } from "../../../store/modules/types";
 import { reusableMakeCall } from "../../../utilities/helpers/api";
+import { AttributesTab } from "../../UI/organims/Attributes";
 import { SideNav } from "../../UI/organims/SideNav";
 import "./index.css";
 
@@ -43,7 +44,9 @@ export const ProductsPage = () => {
 
     const dispatch = useDispatch();
 
-    const handleTlr = (id: string | number) => {};
+    const handleTlr = (id: string | number) => {
+        setTrlValue(String(id));
+    };
 
     React.useEffect(() => {
         if (productSelector.status === "rest" && !product) {
@@ -131,83 +134,27 @@ export const ProductsPage = () => {
                             <div className="gdp-tabcont-left">
                                 <div className="gdp-info-value gdp-value-mt">
                                     <h3 className="gdp-info-key">{display}:</h3>
-                                    {display === "attribute"
-                                        ? ""
-                                        : product?.description}
+                                    {display === "attribute" ? (
+                                        product ? (
+                                            <AttributesTab
+                                                handleTlr={handleTlr}
+                                                product={product}
+                                                trlValue={trlValue}
+                                                trl={trl}
+                                            />
+                                        ) : (
+                                            <></>
+                                        )
+                                    ) : (
+                                        product?.description
+                                    )}
                                 </div>
                             </div>
                             <div className="gdp-tabcont-right">
-                                <div className="gdp-editables">
-                                    {/* <div className="gdp-editables-one">
-                                        <input
-                                            type="text"
-                                            name=""
-                                            id=""
-                                            className="gdp-input"
-                                        />
-                                        <input
-                                            type="text"
-                                            name=""
-                                            id=""
-                                            className="gdp-input"
-                                        />
-                                    </div>
-                                    <div className="gdp-editables-two">
-                                        {trl &&
-                                            trl?.map((option) => (
-                                                <div
-                                                    className="gdp-radio"
-                                                    key={option.id}
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        name="trl"
-                                                        className="gdp-input--radio"
-                                                        id={String(option.id)}
-                                                        value={option.id}
-                                                        onChange={() =>
-                                                            handleTlr(option.id)
-                                                        }
-                                                        checked={
-                                                            trlValue ===
-                                                            option.id
-                                                        }
-                                                    />
-                                                    <label
-                                                        htmlFor={String(
-                                                            option.id
-                                                        )}
-                                                        className="gdp-input-radio--label"
-                                                    >
-                                                        {option.name}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                    </div>
-                                    <div className="gdp-editables-three">
-                                        <button className="gdp-editables-control gdp-control-button">
-                                            Edit
-                                        </button>
-                                    </div> */}
-                                </div>
+                                <div className="gdp-editables"></div>
                             </div>
                         </section>
-                        <section className="gdp-content">
-                            {/* <div className="gdp-content-controls">
-                                <button className="gdp-control-button app-button">
-                                    View Description
-                                </button>
-                                <button className="gdp-control-button app-button">
-                                    View Attributes
-                                </button>
-                            </div> */}
-
-                            {/* <p className="gdp-display">
-                                {display === "attribute"
-                                    ? product?.description
-                                    : ""}
-                            </p> */}
-                        </section>
+                        <section className="gdp-content"></section>
                     </article>
                 </article>
                 <article className="gdp-right">
