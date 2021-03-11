@@ -77,7 +77,16 @@ export const ProductsPage = () => {
                                     {product?.description}
                                 </div>
                             </div>
-                            <div className="gdp-tabcont-right"></div>
+                            <div className="gdp-tabcont-right">
+                                <div className="gdp-content-controls">
+                                    <button className="gdp-control-button app-button">
+                                        View Description
+                                    </button>
+                                    <button className="gdp-control-button app-button">
+                                        View Attributes
+                                    </button>
+                                </div>
+                            </div>
                         </section>
                         <section className="gdp-content"></section>
                     </article>
