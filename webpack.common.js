@@ -23,6 +23,7 @@ module.exports = {
             template: "./src/index.html",
             inject: "body",
             // favicon: "./src/main/assets/imgs/fav.svg",
+            gmap_url: process.env.GMAP_URL,
         }),
         new MiniCssExtractPlugin({
             filename: "app.css",
@@ -33,6 +34,7 @@ module.exports = {
                 BASE_URL: JSON.stringify(process.env.BASE_URL),
                 GOOGLE_MAP_KEY: JSON.stringify(process.env.GOOGLE_MAP_KEY),
                 APP_ID: JSON.stringify(process.env.GOOGLE_MAP_KEY),
+                GMAP_URL: JSON.stringify(process.env.GMAP_URL),
             },
         }),
     ],

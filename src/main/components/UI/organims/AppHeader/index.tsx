@@ -9,6 +9,7 @@ import { RootState } from "../../../../store/modules/types";
 import { ConfigDef } from "../../../../commonTypes";
 import { reusableMakeCall } from "../../../../utilities/helpers/api";
 import { fetchConfigurationAction } from "../../../../store/modules/configuration/actions";
+import { useGoogleApi } from "../../../../utilities/initMap";
 
 const APP_ID = process.env.APP_ID;
 
@@ -17,6 +18,8 @@ export interface MyCustomCSS extends CSSProperties {
 }
 
 export const AppHeader: React.FC = (): JSX.Element => {
+    const { alreadyDeclared } = useGoogleApi();
+
     const configSelector = useSelector((state: RootState) => {
         return state.fetchConfigurationReducer;
     });
