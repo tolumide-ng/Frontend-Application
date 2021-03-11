@@ -12,13 +12,14 @@ export interface RootState {
         error: string | null;
         configuration: ConfigDef;
     };
-    fetchProductReducer: {};
-    status: string;
-    error: string | null;
-    product: ProductDef;
+    fetchProductReducer: {
+        status: string;
+        error: string | null;
+        product: ProductDef;
+    };
 
     fetchTrlReducer: {
-        STATUS: string;
+        status: string;
         error: string | null;
         trl: TrlDef;
     };

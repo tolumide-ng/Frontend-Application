@@ -20,7 +20,9 @@ export const SideNav = () => {
         <div className="sidnav">
             <ul className="sidnav-ul">
                 {options.map((option) => (
-                    <li className="sidnav-li">{option}</li>
+                    <li className="sidnav-li" key={option}>
+                        {option}
+                    </li>
                 ))}
             </ul>
         </div>

@@ -7,7 +7,8 @@
     padding: 3rem 0;
     column-gap: 1rem;
     position: relative;
-    overflow-y: scroll;
+    max-width: var(--app-max-width);
+    --gdp-img: 10rem;
 }
 
 .gdp-nav {
@@ -47,9 +48,19 @@
 }
 
 .gdp-prod {
-    background-color: red;
     height: 100%;
     grid-row: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gdp-img {
+    /* max-height: 100%;
+    max-width: 100%; */
+    object-fit: cover;
+    height: var(--gdp-img);
+    width: var(--gdp-img);
 }
 
 .gdp-cont {

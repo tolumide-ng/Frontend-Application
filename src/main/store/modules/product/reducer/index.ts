@@ -8,7 +8,9 @@ export const fetchProductReducer = (
     state = initialState,
     fetchProductProps: FetchProductActionTypeDefs
 ): FetchProductStateDef => {
-    return fetchProductTypes.includes(fetchProductProps.type)
-        ? { ...state, ...fetchProductProps }
+    const newState = fetchProductTypes.includes(fetchProductProps.type)
+        ? { ...state, ...fetchProductProps.payload }
         : state;
+
+    return newState;
 };

@@ -27,7 +27,7 @@ export const fetchTrlFailure = (error: string) => ({
 export const fetchTrlSuccess = (trl: []) => ({
     type: FETCH_TRL_SUCCESS,
     payload: {
-        type: "fetchTrlSuccess",
+        status: "fetchTrlSuccess",
         error: null,
         trl,
     },

@@ -10,7 +10,7 @@ import {
 export const fetchProductPending = () => ({
     type: FETCH_PRODUCT_PENDING,
     payload: {
-        type: "fetchProductPending",
+        status: "fetchProductPending",
         error: null,
         product: {},
     },
@@ -19,7 +19,7 @@ export const fetchProductPending = () => ({
 export const fetchProductFailure = (error: string) => ({
     type: FETCH_PRODUCT_FAILURE,
     payload: {
-        type: "fetchProductFailure",
+        status: "fetchProductFailure",
         error,
         product: {},
     },
@@ -28,7 +28,7 @@ export const fetchProductFailure = (error: string) => ({
 export const fetchProductSuccess = (product: {}) => ({
     type: FETCH_PRODUCT_SUCCESS,
     payload: {
-        type: "fetchProductSuccess",
+        status: "fetchProductSuccess",
         error: null,
         product,
     },
@@ -37,7 +37,7 @@ export const fetchProductSuccess = (product: {}) => ({
 export const fetchProductUpdate = (product: {}) => ({
     type: FETCH_PRODUCT_UPDATE,
     payload: {
-        type: "fetchProductUpdate",
+        status: "fetchProductUpdate",
         error: null,
         product,
     },
