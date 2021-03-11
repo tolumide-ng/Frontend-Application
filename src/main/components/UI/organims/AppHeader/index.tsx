@@ -21,8 +21,6 @@ export const AppHeader: React.FC = (): JSX.Element => {
         return state.fetchConfigurationReducer;
     });
 
-    // console.log("config reducer", state);
-
     const [config, setConfig] = React.useState<undefined | ConfigDef>(
         undefined
     );
