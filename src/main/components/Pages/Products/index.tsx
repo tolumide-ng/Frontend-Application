@@ -39,6 +39,8 @@ export const ProductsPage = () => {
         undefined
     );
 
+    const [display, setDisplay] = React.useState("attribute");
+
     const dispatch = useDispatch();
 
     const handleTlr = (id: string | number) => {};
@@ -111,25 +113,32 @@ export const ProductsPage = () => {
                         </figcaption>
                     </figure>
                     <article className="gdp-cont">
+                        <div className="gdp-content-controls">
+                            <button
+                                className="gdp-control-button app-button"
+                                onClick={() => setDisplay("description")}
+                            >
+                                View Description
+                            </button>
+                            <button
+                                className="gdp-control-button app-button"
+                                onClick={() => setDisplay("attribute")}
+                            >
+                                View Attributes
+                            </button>
+                        </div>
                         <section className="gdp-tabcont">
                             <div className="gdp-tabcont-left">
-                                <h3 className="gdp-info-key">Description:</h3>
                                 <div className="gdp-info-value gdp-value-mt">
-                                    {product?.description}
+                                    <h3 className="gdp-info-key">{display}:</h3>
+                                    {display === "attribute"
+                                        ? ""
+                                        : product?.description}
                                 </div>
                             </div>
                             <div className="gdp-tabcont-right">
-                                <div className="gdp-content-controls">
-                                    <button className="gdp-control-button app-button">
-                                        View Description
-                                    </button>
-                                    <button className="gdp-control-button app-button">
-                                        View Attributes
-                                    </button>
-                                </div>
-
                                 <div className="gdp-editables">
-                                    <div className="gdp-editables-one">
+                                    {/* <div className="gdp-editables-one">
                                         <input
                                             type="text"
                                             name=""
@@ -146,7 +155,10 @@ export const ProductsPage = () => {
                                     <div className="gdp-editables-two">
                                         {trl &&
                                             trl?.map((option) => (
-                                                <div className="gdp-radio">
+                                                <div
+                                                    className="gdp-radio"
+                                                    key={option.id}
+                                                >
                                                     <input
                                                         type="radio"
                                                         name="trl"
@@ -176,15 +188,45 @@ export const ProductsPage = () => {
                                         <button className="gdp-editables-control gdp-control-button">
                                             Edit
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </section>
-                        <section className="gdp-content"></section>
+                        <section className="gdp-content">
+                            {/* <div className="gdp-content-controls">
+                                <button className="gdp-control-button app-button">
+                                    View Description
+                                </button>
+                                <button className="gdp-control-button app-button">
+                                    View Attributes
+                                </button>
+                            </div> */}
+
+                            {/* <p className="gdp-display">
+                                {display === "attribute"
+                                    ? product?.description
+                                    : ""}
+                            </p> */}
+                        </section>
                     </article>
                 </article>
                 <article className="gdp-right">
-                    <section className="gdp-top"></section>
+                    <section className="gdp-top">
+                        <div className="gdp-user">
+                            <img
+                                src={product?.user.profilePicture}
+                                alt={`a picture of ${product?.user.firstName}`}
+                                className="gdp-user-img"
+                            />
+                            <div className="gdp-user-name">
+                                {product?.user.firstName}{" "}
+                                {product?.user.lastName}
+                            </div>
+                            <div className="gdp-user-company">
+                                {product?.company.name}
+                            </div>
+                        </div>
+                    </section>
                     <section className="gdp-bottom"></section>
                 </article>
             </article>
