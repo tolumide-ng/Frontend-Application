@@ -18,3 +18,10 @@ export type ForAxiosDefs =
     | "unlink"
     | "UNLINK"
     | undefined;
+
+export interface ConfigDef {
+    id: number | string;
+    logo: string;
+    mainColor: string;
+    hasUserSection: boolean;
+}
