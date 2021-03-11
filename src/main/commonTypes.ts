@@ -25,3 +25,43 @@ export interface ConfigDef {
     mainColor: string;
     hasUserSection: boolean;
 }
+
+export interface ProductDef {
+    id: string | number;
+    name: string;
+    description: string;
+    picture: string;
+    type: {
+        id: number;
+        name: string;
+    };
+    categories: Array<{ id: number; name: string }>;
+    implementationEffortText: string | null;
+    investmentEffort: string;
+    trl: { id: number; name: string };
+    user: {
+        id: number;
+        email: string;
+        firstName: string;
+        lastName: string;
+        sex: number;
+        profilePicture: string;
+        position: string;
+    };
+    company: {
+        name: string;
+        logo: string;
+        address: {
+            id: number | null;
+            country: { name: string; region: string | null };
+            state: { name: string | null };
+            city: { name: string | null; stateId: number | null };
+            street: string;
+            house: string;
+            zipCode: string;
+            longitude: string;
+            latitude: string;
+        };
+    };
+    businessModels: Array<{ id: number; name: string }>;
+}
